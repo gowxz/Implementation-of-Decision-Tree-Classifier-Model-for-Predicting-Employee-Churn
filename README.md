@@ -1,90 +1,105 @@
-# Implementation-of-Decision-Tree-Regressor-Model-for-Predicting-the-Salary-of-the-Employee
+# Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn
 
 ## AIM:
-To write a program to implement the Decision Tree Regressor Model for Predicting the Salary of the Employee.
+To write a program to implement the Decision Tree Classifier Model for Predicting Employee Churn.
 
 ## Equipments Required:
 1. Hardware – PCs
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
-1. Import the necessary packages using import statement. 
-2. Read the given csv file using read_csv() method and print the number 
-of contents to be displayed using df.head(). 
-3. Import KMeans and use for loop to cluster the data.
-4. Predict the cluster and plot data graphs.
-5. Print the outputs and end the program
+1. Import the required libraries.
+2.Upload and read the dataset.
+3.Check for any null values using the isnull() function.
+4.From sklearn.tree import DecisionTreeClassifier and use criterion as entropy.
+5.Find the accuracy of the model and predict the required values by importing the required module from sklearn.
 
 ## Program:
 ```
+/*
+Program to implement the Decision Tree Classifier Model for Predicting Employee Churn.
+Developed by: KAVYA T 
+RegisterNumber:  2305003004
+*/
+import pandas as pd
 
-Program to implement the Decision Tree Regressor Model for Predicting the Salary of the Employee.
-Developed by: GOWTHAM S
-RegisterNumber: 2305002008 
+# Load the dataset
+data = pd.read_csv("/content/Employee_EX6.csv")
 
-```
-```python
-import pandas as pd 
-import numpy as np 
-data=pd.read_csv("Employee.csv") 
-data.head() 
-data.info() 
-data.isnull().sum() 
-data["left"].value_counts() 
-from sklearn.preprocessing import LabelEncoder 
-l=LabelEncoder() 
-data["salary"]=l.fit_transform(data["salary"]) 
-data.head() 
-data["Departments "]=l.fit_transform(data["Departments "]) 
-data.head() 
-data.info() 
-data.shape 
-x=data[['satisfaction_level','last_evaluation','number_project','average_montly
- _hours','time_spend_company','Work_accident','promotion_last_5years','Depa
- rtments ','salary']] 
-x.head() 
-x.shape 
-x.info() 
-y=data['left'] 
-from sklearn.model_selection import train_test_split 
-x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=
- 100) 
-from sklearn.tree import DecisionTreeClassifier 
-dt=DecisionTreeClassifier(criterion="entropy") 
-dt.fit(x_train,y_train) 
-y_pred=dt.predict(x_test) 
-print(y_pred) 
-from sklearn import metrics 
-accuracy=metrics.accuracy_score(y_test,y_pred) 
-print("Accuracy = ",accuracy) 
-dt.predict([[0.5,0.8,9,260,6,0,1,2,1]])
+# Display the first few rows of the dataset
+data.head()
+
+# Get information about the dataset
+data.info()
+
+# Check for missing values
+data.isnull().sum()
+
+# Count the number of employees who left and stayed
+data["left"].value_counts()
+
+# Encode the 'salary' column
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+data["salary"] = le.fit_transform(data["salary"])
+
+# Display the first few rows of the modified dataset
+data.head()
+
+# Select features (independent variables)
+x = data[["satisfaction_level", "last_evaluation", "number_project", "average_montly_hours", "time_spend_company", "Work_accident", "promotion_last_5years", "salary"]]
+x.head()  # No departments and no left
+
+# Select the target variable (dependent variable)
+y = data["left"]
+
+# Split the dataset into training and testing sets
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=100)
+
+# Train the Decision Tree classifier
+from sklearn.tree import DecisionTreeClassifier
+dt = DecisionTreeClassifier(criterion="entropy")
+dt.fit(x_train, y_train)
+
+# Predict the target variable for the test set
+y_pred = dt.predict(x_test)
+
+# Calculate the accuracy of the model
+from sklearn import metrics
+accuracy = metrics.accuracy_score(y_test, y_pred)
+accuracy
+
+# Predict whether an employee will leave based on given features
+dt.predict([[0.5, 0.8, 9, 260, 6, 0, 1, 2]])
 ```
 
 ## Output:
-# Head()
-![image](https://github.com/23004426/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/144979327/88eda77e-9bc1-4b2f-a350-307396ba8f80)
 
-# info()
-![image](https://github.com/23004426/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/144979327/31158613-1a90-4a93-9c07-65282fd16956)
+### Head:
+![image](https://github.com/23008344/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/145742655/a3acd46e-66c9-43dc-9c85-92cba8c1385f)
 
-# isnull().sum()
-![image](https://github.com/23004426/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/144979327/975a4935-571e-45f9-9413-c77a85968f4f)
+### Data.info():
+![image](https://github.com/23008344/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/145742655/12152984-1c9f-4315-a8e7-45b70683916e)
 
-# Left value counts
-![image](https://github.com/23004426/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/144979327/294fdfea-0700-4380-aad7-69dbc559fbd5)
+### isnull() and sum():
+![image](https://github.com/23008344/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/145742655/2c6e7a39-6d35-46c4-a4e3-0ae41f344def)
 
-# Head()(After transform of salary)
-![image](https://github.com/23004426/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/144979327/f5f32118-8db8-4324-bfb4-805a51a48651)
+### Data Value Counts():
+![image](https://github.com/23008344/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/145742655/ef5ac630-3bc4-49eb-b6c0-cdd640015ce7)
 
-# After removing left and departments columns
-![image](https://github.com/23004426/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/144979327/2f9238a6-a9a9-4d21-8617-795e8054cac6)
+### Data.head() for salary:
+![image](https://github.com/23008344/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/145742655/dd91d140-e4c7-4d04-bc92-036251d12f55)
 
-# accuracy
-![image](https://github.com/23004426/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/144979327/8b017485-1503-4601-a67f-064347835979)
+### x.head:
+![image](https://github.com/23008344/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/145742655/f7367faa-bc17-4237-a85a-5d5c07f71b87)
 
-# prediction
-![image](https://github.com/23004426/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/144979327/08a9e819-7f80-4d93-8118-b43146187660)
+### Accuracy Value:
+![image](https://github.com/23008344/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/145742655/65007c77-bb80-4a84-a891-327f6ddbbabf)
+
+### Data Prediction:
+![image](https://github.com/23008344/Implementation-of-Decision-Tree-Classifier-Model-for-Predicting-Employee-Churn/assets/145742655/f3a7586e-af78-4ae2-bf54-4dc09bd44028)
 
 
 ## Result:
-Thus the program to implement the Decision Tree Regressor Model for Predicting the Salary of the Employee is written and verified using python programming.
+Thus the program to implement the  Decision Tree Classifier Model for Predicting Employee Churn is written and verified using python programming.
